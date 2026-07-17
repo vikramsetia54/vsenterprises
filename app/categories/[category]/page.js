@@ -51,7 +51,7 @@ export default function CategoryDetailPage({ params }) {
                     <LayoutGrid className="size-8 text-muted-foreground" />
                 </div>
                 <div>
-                    <h1 className="text-2xl font-bold text-foreground mb-2">Category Not Found</h1>
+                    <h1 className="text-2xl font-medium text-foreground mb-2">Category Not Found</h1>
                     <p className="text-muted-foreground text-sm">This category doesn't exist or may have been removed.</p>
                 </div>
                 <Button asChild variant="outline" className="rounded-full px-6">
@@ -93,7 +93,7 @@ export default function CategoryDetailPage({ params }) {
                     className="mb-6 space-y-2"
                 >
                     <span className="text-xs font-semibold uppercase tracking-widest text-primary">Category</span>
-                    <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
+                    <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-foreground">
                         {category.label}
                     </h1>
                     {category.description && (

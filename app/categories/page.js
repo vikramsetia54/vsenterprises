@@ -30,30 +30,28 @@ export default function ShopPage() {
         <main className="min-h-screen bg-background pb-20">
             <div className="max-w-7xl mx-auto px-4 md:px-8 pt-10">
                 {/* Page Header */}
-                <div className="mb-12 space-y-3">
-                    <motion.span
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="inline-block text-xs font-semibold uppercase tracking-widest text-primary"
-                    >
-                        All Collections
-                    </motion.span>
+                <div className="mb-10 md:mb-12">
                     <motion.h1
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.07 }}
-                        className="text-4xl md:text-5xl font-bold tracking-tight text-foreground"
+                        className="font-display text-4xl md:text-5xl font-medium tracking-tight text-foreground"
                     >
                         Shop by Category
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.14 }}
-                        className="text-muted-foreground text-sm leading-relaxed max-w-xl"
+                        transition={{ delay: 0.1 }}
+                        className="mt-3 text-muted-foreground text-sm md:text-base leading-relaxed max-w-xl"
                     >
-                        Discover our curated categories — from high-performance tech to timeless lifestyle essentials.
+                        Certified fasteners, cables, connectors and hardware — organized by category so you can spec and source exactly what the job needs.
                     </motion.p>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.18 }}
+                        className="mt-8 h-px w-full bg-border"
+                    />
                 </div>
 
                 {/* Quick Filters */}
@@ -71,7 +69,7 @@ export default function ShopPage() {
                         <Link
                             key={filter.label}
                             href={filter.href}
-                            className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-border/60 text-sm font-medium text-muted-foreground hover:border-primary hover:text-primary hover:bg-primary/5 transition-all duration-200"
+                            className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border text-sm font-semibold text-muted-foreground hover:border-primary hover:text-primary hover:bg-primary/5 transition-all duration-200"
                         >
                             {filter.icon}
                             {filter.label}
@@ -114,7 +112,7 @@ function CategoryCard({ category, index }) {
         >
             <Link
                 href={href}
-                className="group relative flex flex-col h-64 rounded-2xl border border-border/50 overflow-hidden bg-muted/20 transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5"
+                className="group relative flex flex-col h-64 rounded-xl border border-border overflow-hidden bg-muted transition-all duration-300 hover:shadow-xl hover:border-primary/40 hover:-translate-y-1.5"
             >
                 {/* Image Overlay */}
                 <div className="absolute inset-0">
@@ -131,19 +129,19 @@ function CategoryCard({ category, index }) {
 
                 {/* Content */}
                 <div className="relative mt-auto p-6 flex flex-col gap-2 transform transition-transform duration-300 group-hover:translate-y-[-4px]">
-                    <div className="size-10 rounded-xl bg-primary/90 text-primary-foreground flex items-center justify-center backdrop-blur-sm shadow-lg mb-1">
+                    <div className="size-10 rounded-lg bg-primary text-primary-foreground flex items-center justify-center shadow-lg mb-1">
                         <ShoppingBag className="size-5" />
                     </div>
-                    
-                    <h3 className="text-xl font-bold text-white tracking-tight">
+
+                    <h3 className="font-display text-xl font-medium text-white tracking-tight">
                         {label}
                     </h3>
                     <p className="text-xs text-white/80 leading-relaxed line-clamp-2 max-w-[240px]">
-                        {description || `Explore our premium collection of ${label}.`}
+                        {description || `Certified ${label} — spec'd and in stock.`}
                     </p>
 
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-primary-foreground mt-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-                        Browse Collection
+                    <div className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-widest font-semibold text-white mt-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+                        Browse
                         <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
                     </div>
                 </div>

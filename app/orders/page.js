@@ -28,7 +28,7 @@ export default async function OrdersPage() {
         
         {/* Header Section */}
         <div className="mb-12">
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-gray-900 mb-3">
+          <h1 className="text-3xl sm:text-4xl font-medium tracking-tight text-gray-900 mb-3">
             Order History
           </h1>
           <p className="text-gray-500 text-sm sm:text-base">
@@ -41,7 +41,7 @@ export default async function OrdersPage() {
             <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-6">
                 <ShoppingBag className="w-8 h-8 text-gray-400" />
             </div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">No orders found</h2>
+            <h2 className="text-xl font-medium text-gray-900 mb-2">No orders found</h2>
             <p className="text-gray-500 mb-8 max-w-sm">
               You haven't placed any orders yet. When you do, their details will appear here.
             </p>

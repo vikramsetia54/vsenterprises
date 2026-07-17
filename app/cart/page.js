@@ -3,16 +3,18 @@ import React from "react";
 import { useCart } from "@/context/CartContext";
 import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
-import { 
-    Trash2, Plus, Minus, ShoppingBag, 
+import {
+    Trash2, Plus, Minus, ShoppingBag,
     ArrowRight, ArrowLeft, Package,
-    ShieldCheck, Truck, RotateCcw
+    ShieldCheck, Truck, RotateCcw, LogIn
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useUser } from "@clerk/nextjs";
 
 export default function CartPage() {
   const { cartItems, removeFromCart, updateQuantity, getCartTotal } = useCart();
+  const { isSignedIn } = useUser();
 
   const subtotal = getCartTotal();
   const shipping = subtotal > 499 ? 0 : 49;
@@ -28,7 +30,7 @@ export default function CartPage() {
         >
             <ShoppingBag className="size-10 text-muted-foreground/50" />
         </motion.div>
-        <h1 className="text-2xl font-bold mb-2">Your cart is empty</h1>
+        <h1 className="text-2xl font-medium mb-2">Your cart is empty</h1>
         <p className="text-muted-foreground mb-8 max-w-sm">
           Looks like you haven't added anything to your cart yet. Explore our categories to find high-quality products.
         </p>
@@ -43,7 +45,7 @@ export default function CartPage() {
     <main className="min-h-screen bg-muted/20 pb-20">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
         <div className="flex items-center gap-3 mb-10">
-            <h1 className="text-3xl font-bold tracking-tight">Shopping Cart</h1>
+            <h1 className="text-3xl font-medium tracking-tight">Shopping Cart</h1>
             <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-bold ring-1 ring-primary/20">
                 {cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}
             </span>
@@ -84,7 +86,7 @@ export default function CartPage() {
                         {/* Selected Options */}
                         <div className="flex flex-wrap gap-2 mb-3">
                             {Object.entries(item.selectedOptions).map(([key, val]) => (
-                                <span key={key} className="text-[10px] uppercase font-black tracking-widest px-2 py-0.5 bg-muted rounded text-muted-foreground border border-border/40">
+                                <span key={key} className="text-[10px] uppercase font-medium tracking-widest px-2 py-0.5 bg-muted rounded text-muted-foreground border border-border/40">
                                     {key}: {val}
                                 </span>
                             ))}
@@ -130,7 +132,7 @@ export default function CartPage() {
           {/* Checkout Summary */}
           <div className="lg:col-span-4">
             <div className="bg-white rounded-3xl border border-border shadow-sm p-6 space-y-6 sticky top-24">
-              <h2 className="text-xl font-bold">Order Summary</h2>
+              <h2 className="text-xl font-medium">Order Summary</h2>
               
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between items-center">
@@ -155,12 +157,24 @@ export default function CartPage() {
                     <span className="text-primary text-xl">₹{total}</span>
                 </div>
                 <p className="text-[10px] text-muted-foreground text-center italic">Inclusive of all taxes and delivery charges (if applicable).</p>
-                <Button asChild className="w-full h-12 rounded-xl text-base font-bold shadow-lg shadow-primary/10 group">
-                    <Link href="/checkout">
-                        Checkout Now
-                        <ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                </Button>
+                {isSignedIn ? (
+                    <Button asChild className="w-full h-12 rounded-xl text-base font-bold shadow-lg shadow-primary/10 group">
+                        <Link href="/checkout">
+                            Checkout Now
+                            <ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                    </Button>
+                ) : (
+                    <div className="space-y-2">
+                        <Button asChild variant="outline" className="w-full h-12 rounded-xl text-base font-bold border-2 group">
+                            <Link href="/sign-in">
+                                <LogIn className="mr-2 size-4" />
+                                Sign in to Checkout
+                            </Link>
+                        </Button>
+                        <p className="text-[11px] text-muted-foreground text-center">You need to be signed in to place an order.</p>
+                    </div>
+                )}
               </div>
 
               {/* Trust markers */}

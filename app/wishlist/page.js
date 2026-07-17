@@ -31,7 +31,7 @@ export default function WishlistPage() {
         >
             <Heart className="size-10 text-muted-foreground/30" />
         </motion.div>
-        <h1 className="text-2xl font-bold mb-2">Your wishlist is empty</h1>
+        <h1 className="text-2xl font-medium mb-2">Your wishlist is empty</h1>
         <p className="text-muted-foreground mb-8 max-w-sm">
           Save items you love to find them later and add them to your cart in one click.
         </p>
@@ -47,7 +47,7 @@ export default function WishlistPage() {
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
         <div className="flex items-center justify-between mb-10">
             <div className="flex items-center gap-3">
-                <h1 className="text-3xl font-bold tracking-tight">My Wishlist</h1>
+                <h1 className="text-3xl font-medium tracking-tight">My Wishlist</h1>
                 <span className="px-2.5 py-0.5 rounded-full bg-red-50 text-red-600 text-xs font-bold ring-1 ring-red-100">
                     {wishlistItems.length} {wishlistItems.length === 1 ? 'item' : 'items'}
                 </span>
@@ -112,7 +112,7 @@ export default function WishlistPage() {
 
                     <div className="mt-auto space-y-4">
                         <div className="flex items-baseline gap-2">
-                            <span className="text-xl font-black text-foreground">₹{product.price}</span>
+                            <span className="text-xl font-medium text-foreground">₹{product.price}</span>
                             {product.onSale && (
                                 <span className="text-xs text-muted-foreground line-through">₹{product.salePrice}</span>
                             )}

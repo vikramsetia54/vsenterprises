@@ -4,9 +4,9 @@ import { useCart } from "@/context/CartContext";
 import { motion, AnimatePresence } from "motion/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { 
-    MapPin, CreditCard, ShieldCheck, Truck, 
-    ChevronLeft, QrCode, ArrowRight
+import {
+    MapPin, CreditCard, ShieldCheck, Truck,
+    ChevronLeft, QrCode, ArrowRight, Landmark
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -51,7 +51,7 @@ export default function CheckoutPage() {
   };
 
   const handlePlaceOrder = async () => {
-    if (paymentMethod === "upi" && !transactionId.trim()) {
+    if ((paymentMethod === "upi" || paymentMethod === "bank") && !transactionId.trim()) {
       alert("Please enter the UTR / Transaction ID after making the payment.");
       return;
     }
@@ -68,7 +68,7 @@ export default function CheckoutPage() {
           totalAmount: total,
           shippingAddress: address,
           paymentMethod,
-          transactionId: paymentMethod === "upi" ? transactionId : null,
+          transactionId: (paymentMethod === "upi" || paymentMethod === "bank") ? transactionId : null,
         }),
       });
 
@@ -113,7 +113,7 @@ export default function CheckoutPage() {
                     <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                       <MapPin className="size-5" />
                     </div>
-                    <h2 className="text-2xl font-bold">Shipping Address</h2>
+                    <h2 className="text-2xl font-medium">Shipping Address</h2>
                   </div>
 
                   <form onSubmit={handleAddressSubmit} className="space-y-4">
@@ -180,13 +180,13 @@ export default function CheckoutPage() {
                     <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                       <CreditCard className="size-5" />
                     </div>
-                    <h2 className="text-2xl font-bold">Payment Method</h2>
+                    <h2 className="text-2xl font-medium">Payment Method</h2>
                   </div>
 
                   {/* Payment Options */}
                   <div className="space-y-4">
-                    <button 
-                      onClick={() => setPaymentMethod("upi")}
+                    <button
+                      onClick={() => { setPaymentMethod("upi"); setTransactionId(""); }}
                       className={cn(
                         "w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all text-left",
                         paymentMethod === "upi" ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"
@@ -206,6 +206,28 @@ export default function CheckoutPage() {
                         <p className="text-xs text-muted-foreground mt-0.5">Pay via any UPI app instantly</p>
                       </div>
                     </button>
+
+                    <button
+                      onClick={() => { setPaymentMethod("bank"); setTransactionId(""); }}
+                      className={cn(
+                        "w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all text-left",
+                        paymentMethod === "bank" ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"
+                      )}
+                    >
+                      <div className={cn(
+                        "size-5 rounded-full border-2 flex items-center justify-center shrink-0",
+                        paymentMethod === "bank" ? "border-primary" : "border-muted-foreground"
+                      )}>
+                        {paymentMethod === "bank" && <div className="size-2.5 rounded-full bg-primary" />}
+                      </div>
+                      <div>
+                        <div className="font-bold flex items-center gap-2">
+                          <Landmark className="size-4" />
+                          Bank Transfer (NEFT / RTGS)
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-0.5">Transfer directly to our HDFC Bank account</p>
+                      </div>
+                    </button>
                   </div>
 
                   {/* UPI Payment Flow */}
@@ -220,7 +242,7 @@ export default function CheckoutPage() {
                         {/* QR Code */}
                         <div className="shrink-0 space-y-3">
                           <div className="bg-white p-3 rounded-2xl border border-border shadow-sm max-w-[200px] mx-auto">
-                            <img src="/qr.jpeg" alt="UPI QR Code" className="w-full aspect-square object-cover rounded-xl" />
+                            <img src="/qr.png" alt="UPI QR Code" className="w-full  object-cover rounded-xl" />
                           </div>
                           <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider text-center">Scan to Pay</p>
                         </div>
@@ -231,13 +253,13 @@ export default function CheckoutPage() {
                             <p className="text-sm text-muted-foreground mb-1">UPI ID</p>
                             <div className="flex items-center justify-center md:justify-start gap-2">
                               <code className="px-3 py-1.5 bg-white border border-border shadow-sm rounded-lg font-bold text-primary select-all">
-                                veter85770576@barodampay
+                                vsenterprises.36854234@hdfcbank 
                               </code>
                             </div>
                           </div>
 
                           <div className="space-y-3">
-                            <p className="text-sm font-medium">Total Amount to Pay: <span className="text-lg font-black text-primary">₹{total}</span></p>
+                            <p className="text-sm font-medium">Total Amount to Pay: <span className="text-lg font-medium text-primary">₹{total}</span></p>
                             
                             <ol className="text-xs text-muted-foreground space-y-2 list-decimal list-inside text-left leading-relaxed">
                               <li>Open any UPI app (GPay, PhonePe, Paytm, etc.)</li>
@@ -265,6 +287,61 @@ export default function CheckoutPage() {
                     </motion.div>
                   )}
 
+                  {/* Bank Transfer Details */}
+                  {paymentMethod === "bank" && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      className="bg-muted/30 p-6 rounded-2xl border border-border space-y-5"
+                    >
+                      <div className="flex items-center gap-2 mb-1">
+                        <Landmark className="size-4 text-primary" />
+                        <span className="font-bold text-sm">HDFC Bank Account Details</span>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                        {[
+                          { label: "Account Name", value: "VS Enterprises" },
+                          { label: "Account Number", value: "50200104781746" },
+                          { label: "Bank", value: "HDFC Bank Ltd." },
+                          { label: "IFSC Code", value: "HDFC0006458" },
+                          { label: "Transfer Type", value: "NEFT / RTGS" },
+                        ].map(({ label, value }) => (
+                          <div key={label} className="bg-white rounded-xl border border-border px-4 py-3">
+                            <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold mb-0.5">{label}</p>
+                            <p className="font-bold text-foreground select-all">{value}</p>
+                          </div>
+                        ))}
+                        <div className="bg-white rounded-xl border border-border px-4 py-3 sm:col-span-2">
+                          <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold mb-0.5">Branch Address</p>
+                          <p className="font-medium text-foreground text-xs leading-relaxed">GRD Floor, 814, B Block Panki, Dist Kanpur Nagar, Uttar Pradesh – 208020</p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-3">
+                        <p className="text-sm font-medium">Total Amount to Transfer: <span className="text-lg font-medium text-primary">₹{total}</span></p>
+                        <ol className="text-xs text-muted-foreground space-y-1.5 list-decimal list-inside leading-relaxed">
+                          <li>Log in to your bank's net banking or mobile app</li>
+                          <li>Add VS Enterprises as a beneficiary using the details above</li>
+                          <li>Transfer ₹{total} via NEFT or RTGS</li>
+                          <li>Enter the UTR / Transaction Reference Number below</li>
+                        </ol>
+                      </div>
+
+                      <div className="space-y-1.5 pt-1">
+                        <label className="text-sm font-medium">UTR / Transaction Reference No.</label>
+                        <input
+                          required
+                          type="text"
+                          value={transactionId}
+                          onChange={e => setTransactionId(e.target.value)}
+                          className="w-full h-11 px-3 rounded-xl border border-border bg-white focus:ring-2 focus:ring-primary/20 outline-none"
+                          placeholder="e.g. HDFC0012345678901"
+                        />
+                      </div>
+                    </motion.div>
+                  )}
+
                   <div className="pt-4 border-t border-border flex justify-end">
                     <Button 
                       onClick={handlePlaceOrder}
@@ -283,7 +360,7 @@ export default function CheckoutPage() {
           {/* Order Summary Sidebar */}
           <div className="lg:col-span-5 xl:col-span-4">
             <div className="bg-white rounded-3xl border border-border shadow-sm p-6 sticky top-24 space-y-6">
-              <h3 className="text-lg font-bold">Order Summary</h3>
+              <h3 className="text-lg font-medium">Order Summary</h3>
               
               <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
                 {cartItems.map((item) => (

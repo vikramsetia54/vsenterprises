@@ -13,16 +13,16 @@ const items = [
 
 export function PromoBanner() {
     return (
-        <div className="w-full bg-primary py-2 hidden md:block overflow-hidden">
+        <div className="w-full bg-foreground py-2 hidden md:block overflow-hidden">
             <InfiniteSlider duration={50} className="flex items-center gap-12">
                 {[...items, ...items, ...items].map((item, index) => (
                     <div
                         key={index}
-                        className="flex items-center gap-2 whitespace-nowrap text-[11px] font-medium tracking-wide text-primary-foreground/90"
+                        className="flex items-center gap-2.5 whitespace-nowrap font-mono text-[11px] font-medium uppercase tracking-wider text-background/85"
                     >
-                        <span className="text-primary-foreground/70">{item.icon}</span>
+                        <span className="text-signal">{item.icon}</span>
                         <span>{item.text}</span>
-                        <span className="ml-8 h-3 w-px bg-primary-foreground/20" />
+                        <span className="ml-8 size-1 rounded-full bg-signal/60" />
                     </div>
                 ))}
             </InfiniteSlider>
@@ -40,14 +40,14 @@ export function MobilePromoBanner() {
     ];
 
     return (
-        <div className="w-full bg-primary py-1.5 overflow-hidden md:hidden">
+        <div className="w-full bg-foreground py-1.5 overflow-hidden md:hidden">
             <InfiniteSlider duration={25} className="flex items-center gap-10">
                 {[...items, ...items].map((text, index) => (
                     <div
                         key={index}
-                        className="flex items-center gap-2 whitespace-nowrap text-[10px] font-medium tracking-wide text-primary-foreground/90"
+                        className="flex items-center gap-2 whitespace-nowrap font-mono text-[10px] font-medium uppercase tracking-wider text-background/85"
                     >
-                        <span className="size-1 rounded-full bg-primary-foreground/50" />
+                        <span className="size-1 rounded-full bg-signal" />
                         <span>{text}</span>
                     </div>
                 ))}

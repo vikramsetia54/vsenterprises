@@ -19,7 +19,7 @@ export function TestimonialsSection() {
 			try {
 				const response = await fetch("/api/testimonials");
 				const data = await response.json();
-				setTestimonials(data);
+				setTestimonials(Array.isArray(data) ? data : []);
 			} catch (error) {
 				console.error("Failed to fetch testimonials:", error);
 			} finally {
@@ -47,7 +47,7 @@ export function TestimonialsSection() {
                     <span className="text-xs font-semibold uppercase tracking-widest text-primary">
                         Customer Stories
                     </span>
-                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+                    <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-foreground">
                         What Our Customers Say
                     </h2>
                     <p className="max-w-md text-muted-foreground text-sm leading-relaxed">

@@ -16,7 +16,7 @@ export function BlogsSection({ initialBlogs, limit, showViewMore = false }) {
 				try {
 					const response = await fetch("/api/blogs");
 					const data = await response.json();
-					setBlogs(data);
+					setBlogs(Array.isArray(data) ? data : []);
 				} catch (error) {
 					console.error("Failed to fetch blogs:", error);
 				} finally {
@@ -43,7 +43,7 @@ export function BlogsSection({ initialBlogs, limit, showViewMore = false }) {
                     <span className="text-xs font-semibold uppercase tracking-widest text-primary">
                         The Journal
                     </span>
-                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+                    <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-foreground">
                         Latest Insights
                     </h2>
                     <p className="max-w-md text-muted-foreground text-sm leading-relaxed">

@@ -18,7 +18,7 @@ export function FaqsSection() {
 			try {
 				const response = await fetch("/api/faqs");
 				const data = await response.json();
-				setQuestions(data);
+				setQuestions(Array.isArray(data) ? data : []);
 			} catch (error) {
 				console.error("Failed to fetch FAQs:", error);
 			} finally {
@@ -43,7 +43,7 @@ export function FaqsSection() {
                         <span className="text-xs font-semibold uppercase tracking-widest text-primary">
                             Support Center
                         </span>
-                        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+                        <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-foreground">
                             Frequently Asked Questions
                         </h2>
                         <p className="text-muted-foreground text-sm leading-relaxed">

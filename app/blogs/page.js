@@ -129,7 +129,7 @@ export default function BlogsPage() {
                                         </>
                                     )}
                                 </div>
-                                <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors leading-snug">
+                                <h2 className="text-2xl md:text-3xl font-medium tracking-tight text-foreground group-hover:text-primary transition-colors leading-snug">
                                     {featuredBlog.title}
                                 </h2>
                                 <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">

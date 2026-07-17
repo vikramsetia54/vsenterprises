@@ -149,7 +149,7 @@ export function MobileNav({ navLinks = [] }) {
                                                             >
                                                                 {/* Categories Group */}
                                                                 <div className="space-y-2">
-                                                                    <span className="text-[10px] font-black uppercase tracking-widest text-primary/60 pl-4">Categories</span>
+                                                                    <span className="text-[10px] font-medium uppercase tracking-widest text-primary/60 pl-4">Categories</span>
                                                                     <div className="flex flex-col gap-1 pl-4 border-l-2 border-primary/10">
                                                                         {link.categories.map(sub => (
                                                                             <Link 
@@ -166,7 +166,7 @@ export function MobileNav({ navLinks = [] }) {
 
                                                                 {/* Specials Group */}
                                                                 <div className="space-y-2">
-                                                                    <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 pl-4">Collections</span>
+                                                                    <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground/60 pl-4">Collections</span>
                                                                     <div className="flex flex-col gap-1 pl-4 border-l-2 border-border/20">
                                                                         {link.specials.map(sub => (
                                                                             <Link 

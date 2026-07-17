@@ -20,18 +20,30 @@ export default function ContactPage() {
               className="lg:col-span-2 space-y-4"
             >
               <div>
-                <h2 className="text-xl md:text-2xl font-bold mb-4">Get in Touch</h2>
+                <h2 className="text-xl md:text-2xl font-medium mb-4">Get in Touch</h2>
                 <div className="flex flex-row flex-wrap lg:flex-col gap-4 md:space-y-4">
                   <div className="flex items-start gap-3 w-full sm:w-[calc(50%-0.5rem)] lg:w-full">
                     <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-primary/10 text-primary">
                       <MapPin className="w-5 h-5" />
                     </div>
-                    <div>
+                    <div className="flex-1">
                       <h3 className="font-semibold text-sm md:text-base">Our Office</h3>
                       <p className="text-xs md:text-sm text-muted-foreground mt-0.5">
-                        11-B/ 18, DADANAGAR <br />
-                        KANPUR UTTAR PRADESH 208022
+                        53, Panki Site 3, Meeta Sarai <br />
+                        Kanpur Nagar, Uttar Pradesh 208022
                       </p>
+                      <div className="mt-3 rounded-xl overflow-hidden border border-border shadow-sm">
+                        <iframe
+                          title="VS Enterprises Location"
+                          src="https://www.google.com/maps?q=53+Panki+Site+3+Meeta+Sarai+Kanpur+Nagar+Uttar+Pradesh+208022&output=embed"
+                          width="100%"
+                          height="180"
+                          style={{ border: 0, display: "block" }}
+                          allowFullScreen
+                          loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
+                        />
+                      </div>
                     </div>
                   </div>
 
@@ -70,7 +82,7 @@ export default function ContactPage() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="lg:col-span-3 bg-white dark:bg-zinc-950 p-6 rounded-[2rem] border border-border shadow-sm"
             >
-              <h2 className="text-xl md:text-2xl font-bold mb-4">Send us a Message</h2>
+              <h2 className="text-xl md:text-2xl font-medium mb-4">Send us a Message</h2>
               <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
@@ -137,6 +149,8 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+
     </main>
   );
 }

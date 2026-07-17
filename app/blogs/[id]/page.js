@@ -53,7 +53,7 @@ export default function SingleBlogPage({ params }) {
                     <BookOpen className="size-8 text-muted-foreground" />
                 </div>
                 <div>
-                    <h1 className="text-2xl font-bold text-foreground mb-2">Article Not Found</h1>
+                    <h1 className="text-2xl font-medium text-foreground mb-2">Article Not Found</h1>
                     <p className="text-muted-foreground text-sm">This article may have been removed or is unavailable.</p>
                 </div>
                 <Button asChild variant="outline" className="rounded-full px-6">
@@ -112,7 +112,7 @@ export default function SingleBlogPage({ params }) {
                     </div>
 
                     {/* Title */}
-                    <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground leading-snug">
+                    <h1 className="text-3xl md:text-4xl font-medium tracking-tight text-foreground leading-snug">
                         {blog.title}
                     </h1>
 

@@ -130,7 +130,7 @@ export default function SingleProductPage({ params }) {
                     <Package className="size-8 text-muted-foreground" />
                 </div>
                 <div>
-                    <h1 className="text-2xl font-bold text-foreground mb-2">Product Not Found</h1>
+                    <h1 className="text-2xl font-medium text-foreground mb-2">Product Not Found</h1>
                     <p className="text-muted-foreground text-sm max-w-md">
                         We couldn't find the product you're looking for. It may have been discontinued or moved.
                     </p>
@@ -190,17 +190,17 @@ export default function SingleProductPage({ params }) {
                         className="space-y-4"
                     >
                         {/* Main image */}
-                        <div className="relative aspect-square rounded-2xl overflow-hidden border border-border/50 bg-muted/20">
+                        <div className="relative aspect-square rounded-2xl overflow-hidden border border-border bg-muted">
                             {/* Badges */}
                             <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
                                 {newArrival && (
-                                    <span className="px-3 py-1 bg-primary text-primary-foreground text-[11px] font-semibold rounded-full shadow">
+                                    <span className="px-2.5 py-1 bg-foreground text-background font-mono text-[10px] font-semibold uppercase tracking-widest rounded shadow-sm">
                                         New
                                     </span>
                                 )}
                                 {onSale && (
-                                    <span className="px-3 py-1 bg-red-500 text-white text-[11px] font-semibold rounded-full shadow">
-                                        -{discount}%
+                                    <span className="px-2.5 py-1 bg-destructive text-destructive-foreground font-mono text-[10px] font-semibold uppercase tracking-widest rounded shadow-sm">
+                                        −{discount}%
                                     </span>
                                 )}
                             </div>
@@ -249,32 +249,32 @@ export default function SingleProductPage({ params }) {
                     >
                         {/* Category + Rating */}
                         <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-                                {categoryId?.label || "Essentials"}
+                            <span className="font-mono text-[11px] font-medium uppercase tracking-widest text-primary">
+                                {categoryId?.label || "Component"}
                             </span>
-                            <div className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 rounded-full px-3 py-1">
-                                <Star className="size-3.5 fill-amber-400 text-amber-400" />
-                                <span className="text-xs font-semibold text-amber-700">{rating ? Number(rating).toFixed(1) : "5.0"}</span>
+                            <div className="flex items-center gap-1.5 bg-signal/10 border border-signal/30 rounded-md px-2.5 py-1">
+                                <Star className="size-3.5 fill-signal text-signal" />
+                                <span className="font-mono text-xs font-semibold text-foreground tabular-nums">{rating ? Number(rating).toFixed(1) : "5.0"}</span>
                             </div>
                         </div>
 
                         {/* Title */}
                         <div className="space-y-1">
-                            <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground leading-tight">
+                            <h1 className="font-display text-3xl md:text-4xl font-medium tracking-tight text-foreground leading-tight">
                                 {name}
                             </h1>
                         </div>
 
                         {/* Price */}
-                        <div className="flex items-center gap-4 pb-6 border-b border-border/50">
+                        <div className="flex items-center gap-4 pb-6 border-b border-border">
                             <div className="flex flex-col">
-                                <span className="text-xs font-medium text-muted-foreground">Price per {product.unit || "unit"}</span>
-                                <div className="flex items-center gap-3">
+                                <span className="font-mono text-[10px] font-medium uppercase tracking-widest text-muted-foreground">Price per {product.unit || "unit"}</span>
+                                <div className="flex items-baseline gap-3 mt-1">
                                     {isCombinationAvailable ? (
                                         <>
-                                            <span className="text-3xl font-bold text-foreground">₹{currentPrice}</span>
+                                            <span className="font-mono text-3xl font-bold text-foreground tabular-nums">₹{currentPrice}</span>
                                             {onSale && (
-                                                <span className="text-lg text-muted-foreground line-through">₹{defaultPrice}</span>
+                                                <span className="font-mono text-lg text-muted-foreground line-through tabular-nums">₹{defaultPrice}</span>
                                             )}
                                         </>
                                     ) : (
@@ -283,14 +283,18 @@ export default function SingleProductPage({ params }) {
                                 </div>
                             </div>
                             <span className={cn(
-                                "ml-auto text-xs font-semibold px-2.5 py-1 rounded-full",
+                                "ml-auto inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md border",
                                 inStock
-                                    ? isCombinationAvailable 
-                                        ? "bg-green-50 text-green-700 border border-green-200" 
-                                        : "bg-orange-50 text-orange-700 border border-orange-200"
-                                    : "bg-red-50 text-red-700 border border-red-200"
+                                    ? isCombinationAvailable
+                                        ? "bg-success/10 text-success border-success/30"
+                                        : "bg-signal/10 text-signal-foreground border-signal/30"
+                                    : "bg-destructive/10 text-destructive border-destructive/30"
                             )}>
-                                {!inStock ? "Out of Stock" : !isCombinationAvailable ? "Unavailable" : "✓ In Stock"}
+                                <span className={cn(
+                                    "size-1.5 rounded-full",
+                                    inStock ? (isCombinationAvailable ? "bg-success" : "bg-signal") : "bg-destructive"
+                                )} />
+                                {!inStock ? "Out of Stock" : !isCombinationAvailable ? "Unavailable" : "In Stock"}
                             </span>
                         </div>
 
@@ -365,7 +369,7 @@ export default function SingleProductPage({ params }) {
                         )}
 
                         {/* Quantity */}
-                        <div className="space-y-2">
+                        <div className="flex items-center gap-6">
                             <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Quantity (Sets)</label>
                             <div className="inline-flex items-center border border-border rounded-xl overflow-hidden">
                                 <button
@@ -404,12 +408,13 @@ export default function SingleProductPage({ params }) {
                             <Button
                                 variant="outline"
                                 onClick={handleWishlist}
+                                aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
                                 className={cn(
-                                    "h-12 w-12 rounded-xl border-border/60 transition-all",
-                                    isWishlisted && "bg-red-50 border-red-200 text-red-500 hover:bg-red-50"
+                                    "h-12 w-12 rounded-xl border-border transition-all",
+                                    isWishlisted && "bg-destructive/10 border-destructive/30 text-destructive hover:bg-destructive/10"
                                 )}
                             >
-                                <Heart className={cn("size-4", isWishlisted && "fill-red-500 text-red-500")} />
+                                <Heart className={cn("size-4", isWishlisted && "fill-destructive text-destructive")} />
                             </Button>
                         </div>
 

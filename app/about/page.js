@@ -70,24 +70,24 @@ export default function AboutPage() {
         {/* Abstract shapes & grid */}
         <div aria-hidden className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
         <div aria-hidden className="absolute -top-40 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
-        <div aria-hidden className="absolute top-40 -left-20 w-72 h-72 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
+        <div aria-hidden className="absolute top-40 -left-20 w-72 h-72 bg-signal/10 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="relative container mx-auto px-6 lg:px-8 max-w-6xl text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background/50 backdrop-blur-md px-4 py-1.5 text-xs sm:text-sm font-semibold text-primary uppercase tracking-widest mb-8 shadow-sm"
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 font-mono text-[11px] sm:text-xs font-medium text-primary uppercase tracking-widest mb-8 shadow-sm"
           >
-            <Factory className="w-4 h-4" /> VS Enterprises
+            <Factory className="w-4 h-4" /> VS Enterprises · Est. Kanpur
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.15] mb-6"
+            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-foreground leading-[1.05] mb-6"
           >
-            Industrial Hardware &amp;<br className="hidden sm:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">Electrical Components</span>
+            Industrial hardware &amp;<br className="hidden sm:block" />
+            <span className="text-primary">electrical components.</span>
           </motion.h1>
 
           <motion.p
@@ -102,11 +102,11 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <Link href="/categories" className="group relative inline-flex items-center justify-center gap-2 rounded-2xl bg-primary px-8 py-4 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-300 hover:-translate-y-1">
+            <Link href="/categories" className="group relative inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 text-base font-bold text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all duration-300 hover:-translate-y-1">
               Browse Products
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-2xl border-2 border-muted bg-background px-8 py-4 text-base font-semibold text-foreground hover:border-primary/30 hover:bg-muted/30 transition-all duration-300">
+            <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-8 py-4 text-base font-bold text-foreground hover:border-primary/40 hover:bg-muted transition-all duration-300">
               Request a Quote
             </Link>
           </motion.div>
@@ -122,10 +122,10 @@ export default function AboutPage() {
           >
             {stats.map((s, i) => (
               <motion.div key={i} variants={itemUp}
-                className="flex flex-col items-center justify-center py-8 px-4 rounded-3xl bg-background border border-border/50 shadow-xl shadow-black/[0.03] backdrop-blur-sm"
+                className="flex flex-col items-center justify-center py-8 px-4 rounded-xl bg-card border border-border shadow-sm"
               >
-                <span className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-foreground to-foreground/60 mb-1">{s.value}</span>
-                <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">{s.label}</span>
+                <span className="font-mono text-3xl md:text-4xl font-bold text-foreground tabular-nums mb-1">{s.value}</span>
+                <span className="font-mono text-[11px] text-muted-foreground uppercase tracking-widest font-medium">{s.label}</span>
               </motion.div>
             ))}
           </motion.div>
@@ -141,7 +141,7 @@ export default function AboutPage() {
               <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-primary mb-2">
                 <span className="w-8 h-px bg-primary" /> Our Story
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.15]">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight leading-[1.15]">
                 A Decade of <br /><span className="italic font-medium text-muted-foreground">Industrial Excellence</span>
               </h2>
               <div className="space-y-5 text-base md:text-lg text-muted-foreground leading-relaxed pt-2">
@@ -195,7 +195,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-6 lg:px-8 max-w-6xl relative">
 
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={itemUp} className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">Our Product Range</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-4">Our Product Range</h2>
             <p className="text-base md:text-lg text-muted-foreground">
               From structural fasteners to precision electrical components — all in one place.
             </p>
@@ -215,7 +215,7 @@ export default function AboutPage() {
 
                   <span className="text-5xl filter drop-shadow-sm">{p.emoji}</span>
                   <div>
-                    <h3 className="text-xl font-bold text-foreground mb-3">{p.name}</h3>
+                    <h3 className="text-xl font-medium text-foreground mb-3">{p.name}</h3>
                     <p className="text-base text-muted-foreground leading-relaxed">{p.desc}</p>
                   </div>
                 </Link>
@@ -231,7 +231,7 @@ export default function AboutPage() {
 
           <div className="mb-24">
             <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={itemUp} className="mb-12">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">Our Core Values</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-4">Our Core Values</h2>
               <div className="w-20 h-1.5 bg-primary rounded-full" />
             </motion.div>
 
@@ -241,7 +241,7 @@ export default function AboutPage() {
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
                     {v.icon}
                   </div>
-                  <h3 className="text-lg font-bold text-foreground mb-2">{v.title}</h3>
+                  <h3 className="text-lg font-medium text-foreground mb-2">{v.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{v.desc}</p>
                 </motion.div>
               ))}
@@ -250,18 +250,18 @@ export default function AboutPage() {
 
           <div>
             <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={itemUp} className="mb-12">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">Our Commitment</h2>
-              <div className="w-20 h-1.5 bg-blue-500 rounded-full" />
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-4">Our Commitment</h2>
+              <div className="w-20 h-1.5 bg-signal rounded-full" />
             </motion.div>
 
             <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={containerAnim} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {promises.map((p, i) => (
-                <motion.div key={i} variants={itemUp} className="flex flex-col items-start gap-4 p-6 rounded-[1.5rem] border-2 border-dashed border-border/60 hover:border-blue-500/40 hover:bg-blue-500/5 transition-colors duration-300">
+                <motion.div key={i} variants={itemUp} className="flex flex-col items-start gap-4 p-6 rounded-xl border border-dashed border-border hover:border-signal/50 hover:bg-signal/5 transition-colors duration-300">
                   <div className="flex items-center gap-3 w-full">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-signal/15 text-signal-foreground flex items-center justify-center">
                       {p.icon}
                     </div>
-                    <h3 className="text-base font-bold text-foreground">{p.title}</h3>
+                    <h3 className="text-base font-medium text-foreground">{p.title}</h3>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
                 </motion.div>
@@ -284,14 +284,14 @@ export default function AboutPage() {
             <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-transparent" />
 
             <div aria-hidden className="pointer-events-none absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary/30 blur-[120px]" />
-            <div aria-hidden className="pointer-events-none absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-blue-500/20 blur-[120px]" />
+            <div aria-hidden className="pointer-events-none absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-signal/20 blur-[120px]" />
 
             <div className="relative z-10 max-w-2xl mx-auto space-y-8">
               <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md px-4 py-2 text-xs font-semibold text-white uppercase tracking-widest shadow-xl">
                 <Sparkles className="w-3.5 h-3.5 text-primary" /> 10,000+ Industrial Clients
               </span>
 
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1]">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-white tracking-tight leading-[1.1]">
                 Need Industrial Components? <br />
                 <span className="text-zinc-400 font-medium">We've Got You Covered.</span>
               </h2>

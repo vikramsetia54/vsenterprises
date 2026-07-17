@@ -45,7 +45,7 @@ export default async function OrderDetailPage({ params }) {
         {/* Header Section */}
         <div className="pb-8 border-b border-gray-200 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
           <div>
-            <h1 className="text-3xl font-semibold tracking-tight text-gray-900 mb-2">
+            <h1 className="text-3xl font-medium tracking-tight text-gray-900 mb-2">
                 Order details
             </h1>
             <div className="flex items-center gap-3 text-sm text-gray-500 font-medium">
@@ -72,7 +72,7 @@ export default async function OrderDetailPage({ params }) {
           {/* Main Content - Items */}
           <div className="lg:col-span-8 space-y-8">
             <section>
-                <h2 className="text-lg font-semibold text-gray-900 mb-6">Items ordered</h2>
+                <h2 className="text-lg font-medium text-gray-900 mb-6">Items ordered</h2>
                 <div className="divide-y divide-gray-100 border-t border-b border-gray-100">
                     {order.items.map((item, idx) => (
                         <div key={idx} className="flex gap-6 py-6">
@@ -114,7 +114,7 @@ export default async function OrderDetailPage({ params }) {
           <div className="lg:col-span-4 space-y-8">
             {/* Order Summary */}
             <section className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                <h2 className="text-base font-semibold text-gray-900 mb-4">Order Summary</h2>
+                <h2 className="text-base font-medium text-gray-900 mb-4">Order Summary</h2>
                 <dl className="space-y-3 text-sm font-medium text-gray-600">
                     <div className="flex justify-between">
                         <dt>Subtotal</dt>
@@ -137,7 +137,7 @@ export default async function OrderDetailPage({ params }) {
             <section>
                 <div className="flex items-center gap-2 mb-4">
                     <MapPin className="w-4 h-4 text-gray-400" />
-                    <h2 className="text-base font-semibold text-gray-900">Shipping Address</h2>
+                    <h2 className="text-base font-medium text-gray-900">Shipping Address</h2>
                 </div>
                 <div className="text-sm font-medium text-gray-600 leading-relaxed bg-white border border-gray-200 rounded-xl p-5">
                     <p className="text-gray-900 font-semibold mb-1">{order.shippingAddress?.name}</p>
@@ -155,7 +155,7 @@ export default async function OrderDetailPage({ params }) {
             <section>
                 <div className="flex items-center gap-2 mb-4">
                     <CreditCard className="w-4 h-4 text-gray-400" />
-                    <h2 className="text-base font-semibold text-gray-900">Payment Details</h2>
+                    <h2 className="text-base font-medium text-gray-900">Payment Details</h2>
                 </div>
                 <div className="bg-white border border-gray-200 rounded-xl p-5 space-y-4">
                     <div className="flex justify-between items-center text-sm font-medium">

@@ -92,7 +92,7 @@ export function Header() {
                                             <div className="w-[580px] rounded-2xl border border-border bg-white p-2 shadow-2xl shadow-black/10 flex divide-x divide-border overflow-hidden">
                                                 {/* Main Categories */}
                                                 <div className="flex-1 p-3">
-                                                    <span className="block px-3 mb-3 text-[10px] font-black uppercase tracking-widest text-primary/60">Product Categories</span>
+                                                    <span className="block px-3 mb-3 text-[10px] font-medium uppercase tracking-widest text-primary/60">Product Categories</span>
                                                     <div className="grid grid-cols-2 gap-1">
                                                         {link.categories.map((sub, i) => (
                                                             <Link
@@ -108,7 +108,7 @@ export function Header() {
                                                 </div>
                                                 {/* Specials */}
                                                 <div className="w-52 p-3 bg-muted/20">
-                                                    <span className="block px-3 mb-3 text-[10px] font-black uppercase tracking-widest text-muted-foreground/80">Collections</span>
+                                                    <span className="block px-3 mb-3 text-[10px] font-medium uppercase tracking-widest text-muted-foreground/80">Collections</span>
                                                     <div className="flex flex-col gap-1">
                                                         {link.specials.map((sub, i) => (
                                                             <Link
