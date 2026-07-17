@@ -67,7 +67,7 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-semibold text-sm md:text-base">Email</h3>
                       <p className="text-xs md:text-sm text-muted-foreground mt-0.5">
-                        info@vsenterprises.com
+                        info@vsenterprisesgroup.in
                       </p>
                     </div>
                   </div>

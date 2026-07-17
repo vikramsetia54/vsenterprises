@@ -207,11 +207,11 @@ export function MobileNav({ navLinks = [] }) {
                                             </div>
                                             +91 98765 43210
                                         </a>
-                                        <a href="mailto:info@vsenterprises.com" className="flex items-center gap-3 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                                        <a href="mailto:info@vsenterprisesgroup.in" className="flex items-center gap-3 text-sm font-medium text-foreground hover:text-primary transition-colors">
                                             <div className="size-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
                                                 <Mail className="size-4" />
                                             </div>
-                                            info@vsenterprises.com
+                                            info@vsenterprisesgroup.in
                                         </a>
                                     </div>
                                 </div>

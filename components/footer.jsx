@@ -70,9 +70,9 @@ export function Footer() {
 								<Phone className="size-4 text-muted-foreground" />
 								+91 8318005329
 							</a>
-							<a href="mailto:info@vsenterprises.com" className="flex items-center gap-2.5 text-sm font-medium text-foreground hover:text-primary transition-colors">
+							<a href="mailto:info@vsenterprisesgroup.in" className="flex items-center gap-2.5 text-sm font-medium text-foreground hover:text-primary transition-colors">
 								<Mail className="size-4 text-muted-foreground" />
-								info@vsenterprises.com
+								info@vsenterprisesgroup.in
 							</a>
 							<p className="flex items-start gap-2.5 text-sm text-muted-foreground">
 								<MapPin className="size-4 shrink-0 translate-y-0.5" />
