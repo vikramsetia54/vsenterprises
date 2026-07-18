@@ -19,8 +19,8 @@ export default function CategoryDetailPage({ params }) {
                 const data = await response.json();
                 if (Array.isArray(data)) {
                     const found = data.find(c =>
-                        c.href.endsWith(`/${categorySlug}`) ||
-                        c.label.toLowerCase() === categorySlug.toLowerCase()
+                        c.href?.endsWith(`/${categorySlug}`) ||
+                        c.label?.toLowerCase() === categorySlug.toLowerCase()
                     );
                     setCategory(found);
                 }
