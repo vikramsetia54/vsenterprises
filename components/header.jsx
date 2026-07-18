@@ -47,7 +47,7 @@ export function Header() {
             const href =
                 cat.href ||
                 (cat.label
-                    ? `/categories/${cat.label.trim().toLowerCase().replace(/\s+/g, "-")}`
+                    ? `/categories/${cat.label.trim().toLowerCase().replace(/[&]/g, "and").replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "")}`
                     : null);
             return {
                 label: cat.label,

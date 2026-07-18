@@ -18,10 +18,20 @@ export default function CategoryDetailPage({ params }) {
                 const response = await fetch("/api/categories");
                 const data = await response.json();
                 if (Array.isArray(data)) {
-                    const found = data.find(c =>
-                        c.href?.endsWith(`/${categorySlug}`) ||
-                        c.label?.toLowerCase() === categorySlug.toLowerCase()
-                    );
+                    const normalize = (str) =>
+                        decodeURIComponent(str || "")
+                            .toLowerCase()
+                            .replace(/&/g, "and")
+                            .replace(/[^a-z0-9\s-]/g, "")
+                            .replace(/\s+/g, "-")
+                            .replace(/-+/g, "-")
+                            .replace(/^-|-$/g, "");
+                    const normalizedSlug = normalize(categorySlug);
+                    const found = data.find(c => {
+                        const normalizedHref = normalize(c.href?.split("/").pop());
+                        const normalizedLabel = normalize(c.label);
+                        return normalizedHref === normalizedSlug || normalizedLabel === normalizedSlug;
+                    });
                     setCategory(found);
                 }
             } catch (error) {
