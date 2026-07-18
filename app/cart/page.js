@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useUser } from "@clerk/nextjs";
+import { useUser, SignInButton } from "@clerk/nextjs";
 
 export default function CartPage() {
   const { cartItems, removeFromCart, updateQuantity, getCartTotal } = useCart();
@@ -166,12 +166,12 @@ export default function CartPage() {
                     </Button>
                 ) : (
                     <div className="space-y-2">
-                        <Button asChild variant="outline" className="w-full h-12 rounded-xl text-base font-bold border-2 group">
-                            <Link href="/sign-in">
+                        <SignInButton mode="modal" afterSignInUrl="/checkout">
+                            <Button variant="outline" className="w-full h-12 rounded-xl text-base font-bold border-2 group cursor-pointer">
                                 <LogIn className="mr-2 size-4" />
                                 Sign in to Checkout
-                            </Link>
-                        </Button>
+                            </Button>
+                        </SignInButton>
                         <p className="text-[11px] text-muted-foreground text-center">You need to be signed in to place an order.</p>
                     </div>
                 )}

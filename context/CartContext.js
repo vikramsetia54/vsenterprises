@@ -30,13 +30,45 @@ export function CartProvider({ children }) {
 
     async function fetchUserCart() {
       try {
+        // Read any localStorage cart before fetching from DB
+        let localCartItems = [];
+        const savedCart = localStorage.getItem("vs_cart");
+        if (savedCart) {
+          try {
+            localCartItems = JSON.parse(savedCart);
+          } catch (e) {
+            console.error("Failed to parse local cart", e);
+          }
+        }
+
         const res = await fetch('/api/user/sync');
         if (res.ok) {
           const data = await res.json();
-          if (data.cart) {
-             setCartItems(data.cart);
-             localStorage.setItem('vs_cart', JSON.stringify(data.cart));
+          let dbCart = data.cart || [];
+
+          // Merge: add localStorage items not already in DB cart
+          if (localCartItems.length > 0) {
+            for (const localItem of localCartItems) {
+              const existsInDb = dbCart.some(
+                (dbItem) =>
+                  dbItem._id === localItem._id &&
+                  JSON.stringify(dbItem.selectedOptions) === JSON.stringify(localItem.selectedOptions)
+              );
+              if (!existsInDb) {
+                dbCart.push(localItem);
+              }
+            }
+
+            // Save merged cart back to DB
+            fetch('/api/user/sync', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ cart: dbCart })
+            }).catch(err => console.error("Failed to sync merged cart", err));
           }
+
+          setCartItems(dbCart);
+          localStorage.setItem('vs_cart', JSON.stringify(dbCart));
         }
       } catch (error) {
         console.error("Failed to fetch user cart", error);
