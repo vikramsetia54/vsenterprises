@@ -100,7 +100,13 @@ export default function ShopPage() {
 }
 
 function CategoryCard({ category, index }) {
-    const { label, href, description } = category;
+    const { label, description } = category;
+    // Guard: a category saved without an href (e.g. from admin) would render
+    // <Link href={undefined}> and hard-crash the page in Next 16. Derive a
+    // slug from the label as a fallback.
+    const href =
+        category.href ||
+        (label ? `/categories/${label.trim().toLowerCase().replace(/\s+/g, "-")}` : "/categories");
 
     const mainImage = category.imageUrl || "https://placehold.co/600x400?text=Category";
 

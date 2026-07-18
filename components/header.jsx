@@ -38,11 +38,24 @@ export function Header() {
     const cartCount = getCartCount();
     const wishlistCount = getWishlistCount();
 
-    const shopSubLinks = categories.map(cat => ({
-        label: cat.label,
-        href: cat.href,
-        description: cat.description || `Explore our ${cat.label} collection.`
-    }));
+    // Guard against malformed categories (e.g. created in admin without an
+    // href/slug) — a <Link href={undefined}> hard-crashes the whole app in
+    // Next 16. Fall back to a slug derived from the label, and drop entries
+    // that still can't produce a valid href.
+    const shopSubLinks = categories
+        .map(cat => {
+            const href =
+                cat.href ||
+                (cat.label
+                    ? `/categories/${cat.label.trim().toLowerCase().replace(/\s+/g, "-")}`
+                    : null);
+            return {
+                label: cat.label,
+                href,
+                description: cat.description || `Explore our ${cat.label} collection.`,
+            };
+        })
+        .filter(cat => cat.href);
 
     const specialLinks = [
         { label: "Sale", href: "/shop/sale", description: "Discounted products." },

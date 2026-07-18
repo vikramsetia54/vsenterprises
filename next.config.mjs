@@ -3,9 +3,7 @@ import path from 'path';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
-  // reactCompiler disabled: it mis-memoizes Clerk 7.0.6's auth hooks in the
-  // production build, causing "Cannot destructure property 'auth' of undefined".
-  reactCompiler: false,
+  reactCompiler: true,
   turbopack: {
     root: path.resolve('.'),
     resolveAlias: {
