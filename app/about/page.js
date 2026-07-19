@@ -137,7 +137,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-            <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} variants={slideInLeft} className="space-y-6">
+            <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} variants={slideInLeft} className="space-y-6 text-center">
               <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-primary mb-2">
                 <span className="w-8 h-px bg-primary" /> Our Story
               </div>
@@ -230,9 +230,9 @@ export default function AboutPage() {
         <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
 
           <div className="mb-24">
-            <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={itemUp} className="mb-12">
+            <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={itemUp} className="mb-12 text-center">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-4">Our Core Values</h2>
-              <div className="w-20 h-1.5 bg-primary rounded-full" />
+              <div className="w-20 h-1.5 bg-primary rounded-full mx-auto" />
             </motion.div>
 
             <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={containerAnim} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -249,9 +249,9 @@ export default function AboutPage() {
           </div>
 
           <div>
-            <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={itemUp} className="mb-12">
+            <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={itemUp} className="mb-12 text-center">
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-4">Our Commitment</h2>
-              <div className="w-20 h-1.5 bg-signal rounded-full" />
+              <div className="w-20 h-1.5 bg-signal rounded-full mx-auto" />
             </motion.div>
 
             <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={containerAnim} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

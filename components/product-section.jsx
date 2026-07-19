@@ -142,6 +142,7 @@ function ProductCard({ product }) {
     const [selectedSize, setSelectedSize] = useState(variantOptions?.sizes?.[0] || "");
     const [selectedMaterial, setSelectedMaterial] = useState(variantOptions?.materials?.[0] || "");
     const [currentPrice, setCurrentPrice] = useState(salePrice || defaultPrice);
+    const [isCombinationAvailable, setIsCombinationAvailable] = useState(true);
 
     useEffect(() => {
         if (isVariantProduct && pricingData) {
@@ -156,11 +157,19 @@ function ProductCard({ product }) {
 
             if (variantPrice) {
                 setCurrentPrice(variantPrice.price);
+                setIsCombinationAvailable(true);
+            } else {
+                setCurrentPrice(null);
+                setIsCombinationAvailable(false);
             }
+        } else {
+            setIsCombinationAvailable(true);
         }
     }, [selectedDiameter, selectedLength, selectedSize, selectedMaterial, isVariantProduct, pricingData, variantOptions]);
 
     const handleAddToCart = () => {
+        if (!isCombinationAvailable || !product.inStock) return;
+
         const selectedOptions = {};
         if (isVariantProduct) {
             if (variantOptions?.diameters?.length > 0) {
@@ -214,7 +223,13 @@ function ProductCard({ product }) {
                 <button
                     aria-label="Add to cart"
                     onClick={handleAddToCart}
-                    className="size-8 rounded-lg bg-card text-foreground border border-border shadow-sm flex items-center justify-center hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-200"
+                    disabled={!isCombinationAvailable}
+                    className={cn(
+                        "size-8 rounded-lg bg-card text-foreground border border-border shadow-sm flex items-center justify-center transition-colors duration-200",
+                        isCombinationAvailable
+                            ? "hover:bg-primary hover:text-primary-foreground hover:border-primary"
+                            : "opacity-40 pointer-events-none"
+                    )}
                 >
                     <ShoppingCart className="size-3.5" />
                 </button>
@@ -311,11 +326,15 @@ function ProductCard({ product }) {
                     <Button
                         size="sm"
                         onClick={handleAddToCart}
-                        aria-label="Add to cart"
-                        className="h-9 rounded-lg px-3 gap-1.5 text-xs font-bold shadow-sm transition-all active:scale-95"
+                        disabled={!isCombinationAvailable}
+                        aria-label={isCombinationAvailable ? "Add to cart" : "Unavailable combination"}
+                        className={cn(
+                            "h-9 rounded-lg px-3 gap-1.5 text-xs font-bold shadow-sm transition-all active:scale-95",
+                            !isCombinationAvailable && "bg-muted text-muted-foreground pointer-events-none"
+                        )}
                     >
                         <ShoppingCart className="size-3.5" />
-                        Add
+                        {isCombinationAvailable ? "Add" : "Unavailable"}
                     </Button>
                 </div>
             </div>
