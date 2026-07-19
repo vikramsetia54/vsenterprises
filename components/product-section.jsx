@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,13 @@ import { Star, ShoppingCart, Heart, ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
+import {
+    getVariantMetrics,
+    getPricingRows,
+    defaultSelection,
+    findVariantPrice,
+    formatValue,
+} from "@/lib/variants";
 
 export function ProductsSection({ 
     title = "Latest Products", 
@@ -128,8 +135,6 @@ function ProductCard({ product }) {
         newArrival, 
         categoryId,
         isVariantProduct,
-        variantOptions,
-        pricingData,
         unit
     } = product;
 
@@ -137,56 +142,33 @@ function ProductCard({ product }) {
     const { toggleWishlist, isInWishlist } = useWishlist();
     const isWishlisted = isInWishlist(_id);
 
-    const [selectedDiameter, setSelectedDiameter] = useState(variantOptions?.diameters?.[0] || "");
-    const [selectedLength, setSelectedLength] = useState(variantOptions?.lengths?.[0] || "");
-    const [selectedSize, setSelectedSize] = useState(variantOptions?.sizes?.[0] || "");
-    const [selectedMaterial, setSelectedMaterial] = useState(variantOptions?.materials?.[0] || "");
+    // Admin-defined variant dimensions; legacy products are normalized.
+    const metrics = useMemo(
+        () => (isVariantProduct ? getVariantMetrics(product) : []),
+        [isVariantProduct, product]
+    );
+    const [selected, setSelected] = useState(() => defaultSelection(metrics));
     const [currentPrice, setCurrentPrice] = useState(salePrice || defaultPrice);
 
     useEffect(() => {
-        if (isVariantProduct && pricingData) {
-            const variantPrice = pricingData.find(v => {
-                let match = true;
-                if (variantOptions?.diameters?.length > 0) {
-                    match = match && v.diameter === selectedDiameter;
-                }
-                if (variantOptions?.lengths?.length > 0) {
-                    match = match && v.length === selectedLength;
-                }
-                if (variantOptions?.materials?.length > 0) {
-                    match = match && v.material === selectedMaterial;
-                }
-                if (variantOptions?.sizes?.length > 0) {
-                    match = match && v.size === selectedSize;
-                }
-                return match;
-            });
-
-            if (variantPrice) {
-                setCurrentPrice(variantPrice.price);
-            } else {
-                setCurrentPrice(salePrice || defaultPrice);
-            }
-        } else {
-            setCurrentPrice(salePrice || defaultPrice);
+        const fallback = salePrice || defaultPrice;
+        if (!isVariantProduct) {
+            setCurrentPrice(fallback);
+            return;
         }
-    }, [selectedDiameter, selectedLength, selectedSize, selectedMaterial, isVariantProduct, pricingData, variantOptions, salePrice, defaultPrice]);
+        const rows = getPricingRows(product, metrics);
+        const price = findVariantPrice(rows, metrics, selected);
+        setCurrentPrice(price ?? fallback);
+    }, [selected, metrics, isVariantProduct, product, salePrice, defaultPrice]);
 
     const handleAddToCart = () => {
         if (!product.inStock) return;
 
+        // Label the selection so the cart/order shows "Length: 10 mm".
         const selectedOptions = {};
-        if (isVariantProduct) {
-            if (variantOptions?.diameters?.length > 0) {
-                selectedOptions.diameter = selectedDiameter;
-                selectedOptions.length = selectedLength;
-            }
-            if (variantOptions?.sizes?.length > 0) {
-                selectedOptions.size = selectedSize;
-            }
-            if (variantOptions?.materials?.length > 0) {
-                selectedOptions.material = selectedMaterial;
-            }
+        for (const m of metrics) {
+            const value = selected[m.key];
+            if (value) selectedOptions[m.label] = formatValue(value, m.unit);
         }
         addToCart({ ...product, price: currentPrice }, 1, selectedOptions);
     };
@@ -268,56 +250,26 @@ function ProductCard({ product }) {
                 </Link>
 
                 {/* Variant Selectors */}
-                {isVariantProduct && (
+                {isVariantProduct && metrics.length > 0 && (
                     <div className="space-y-2 pb-2">
-                        {variantOptions?.diameters?.length > 0 && (
-                            <div className="flex items-center gap-2">
-                                <label className="text-[10px] font-bold text-muted-foreground w-12 uppercase">DIA</label>
-                                <select 
+                        {metrics.map((m) => (
+                            <div key={m.key} className="flex items-center gap-2">
+                                <label className="text-[10px] font-bold text-muted-foreground w-12 uppercase truncate" title={m.label}>
+                                    {m.label}
+                                </label>
+                                <select
                                     className="text-[11px] bg-muted/50 border-none rounded px-1.5 py-1 focus:ring-1 focus:ring-primary w-full outline-none"
-                                    value={selectedDiameter}
-                                    onChange={(e) => setSelectedDiameter(e.target.value)}
+                                    value={selected[m.key] ?? ""}
+                                    onChange={(e) =>
+                                        setSelected((prev) => ({ ...prev, [m.key]: e.target.value }))
+                                    }
                                 >
-                                    {variantOptions.diameters.map(d => <option key={d} value={d}>{d}</option>)}
+                                    {m.values.map((v) => (
+                                        <option key={v} value={v}>{formatValue(v, m.unit)}</option>
+                                    ))}
                                 </select>
                             </div>
-                        )}
-                        {variantOptions?.lengths?.length > 0 && (
-                            <div className="flex items-center gap-2">
-                                <label className="text-[10px] font-bold text-muted-foreground w-12 uppercase">Len</label>
-                                <select 
-                                    className="text-[11px] bg-muted/50 border-none rounded px-1.5 py-1 focus:ring-1 focus:ring-primary w-full outline-none"
-                                    value={selectedLength}
-                                    onChange={(e) => setSelectedLength(e.target.value)}
-                                >
-                                    {variantOptions.lengths.map(l => <option key={l} value={l}>{l}mm</option>)}
-                                </select>
-                            </div>
-                        )}
-                        {variantOptions?.sizes?.length > 0 && (
-                            <div className="flex items-center gap-2">
-                                <label className="text-[10px] font-bold text-muted-foreground w-12 uppercase">Size</label>
-                                <select 
-                                    className="text-[11px] bg-muted/50 border-none rounded px-1.5 py-1 focus:ring-1 focus:ring-primary w-full outline-none"
-                                    value={selectedSize}
-                                    onChange={(e) => setSelectedSize(e.target.value)}
-                                >
-                                    {variantOptions.sizes.map(s => <option key={s} value={s}>{s}</option>)}
-                                </select>
-                            </div>
-                        )}
-                        {variantOptions?.materials?.length > 0 && (
-                            <div className="flex items-center gap-2">
-                                <label className="text-[10px] font-bold text-muted-foreground w-12 uppercase">Grade</label>
-                                <select 
-                                    className="text-[11px] bg-muted/50 border-none rounded px-1.5 py-1 focus:ring-1 focus:ring-primary w-full outline-none font-semibold text-primary"
-                                    value={selectedMaterial}
-                                    onChange={(e) => setSelectedMaterial(e.target.value)}
-                                >
-                                    {variantOptions.materials.map(m => <option key={m} value={m}>AISI {m}</option>)}
-                                </select>
-                            </div>
-                        )}
+                        ))}
                     </div>
                 )}
 

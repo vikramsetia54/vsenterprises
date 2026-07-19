@@ -15,14 +15,27 @@ const ProductSchema = new mongoose.Schema({
   
   // Custom Variant Fields
   isVariantProduct: { type: Boolean, default: false },
+  // Legacy fixed dimensions. Still written by the admin as a mirror of
+  // variantMetrics so older clients keep working; new code reads variantMetrics.
   variantOptions: {
     diameters: [String],
     lengths: [String],
     sizes: [String],
     materials: [String],
   },
+  // Admin-defined dimensions: each has a label, unit and its own values.
+  variantMetrics: [
+    {
+      key: String,
+      label: String,
+      unit: String,
+      values: [String],
+    }
+  ],
   pricingData: [
     {
+      // Maps metric key -> selected value. Flat fields below are the legacy mirror.
+      values: { type: Map, of: String },
       diameter: String,
       length: String,
       size: String,
