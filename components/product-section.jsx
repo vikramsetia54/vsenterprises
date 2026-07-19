@@ -146,12 +146,20 @@ function ProductCard({ product }) {
     useEffect(() => {
         if (isVariantProduct && pricingData) {
             const variantPrice = pricingData.find(v => {
+                let match = true;
                 if (variantOptions?.diameters?.length > 0) {
-                    return v.diameter === selectedDiameter && v.length === selectedLength && v.material === selectedMaterial;
-                } else if (variantOptions?.sizes?.length > 0) {
-                    return v.size === selectedSize && v.material === selectedMaterial;
+                    match = match && v.diameter === selectedDiameter;
                 }
-                return false;
+                if (variantOptions?.lengths?.length > 0) {
+                    match = match && v.length === selectedLength;
+                }
+                if (variantOptions?.materials?.length > 0) {
+                    match = match && v.material === selectedMaterial;
+                }
+                if (variantOptions?.sizes?.length > 0) {
+                    match = match && v.size === selectedSize;
+                }
+                return match;
             });
 
             if (variantPrice) {

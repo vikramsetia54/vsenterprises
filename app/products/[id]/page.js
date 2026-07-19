@@ -91,12 +91,20 @@ export default function SingleProductPage({ params }) {
     useEffect(() => {
         if (product?.isVariantProduct && product?.pricingData) {
             const variantPrice = product.pricingData.find(v => {
+                let match = true;
                 if (product.variantOptions?.diameters?.length > 0) {
-                    return v.diameter === selectedDiameter && v.length === selectedLength && v.material === selectedMaterial;
-                } else if (product.variantOptions?.sizes?.length > 0) {
-                    return v.size === selectedSize && v.material === selectedMaterial;
+                    match = match && v.diameter === selectedDiameter;
                 }
-                return false;
+                if (product.variantOptions?.lengths?.length > 0) {
+                    match = match && v.length === selectedLength;
+                }
+                if (product.variantOptions?.materials?.length > 0) {
+                    match = match && v.material === selectedMaterial;
+                }
+                if (product.variantOptions?.sizes?.length > 0) {
+                    match = match && v.size === selectedSize;
+                }
+                return match;
             });
 
             if (variantPrice) {
